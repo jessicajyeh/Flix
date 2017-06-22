@@ -14,15 +14,18 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     var movies: [[String: Any]] = []
     var refreshControl: UIRefreshControl!
-        
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.startAnimating()
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: .valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
         tableView.dataSource = self
         getMovies()
+        activityIndicator.stopAnimating()
     }
 
     override func didReceiveMemoryWarning() {
