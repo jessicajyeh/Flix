@@ -17,8 +17,15 @@ class SuperHeroViewController: UIViewController, UICollectionViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        
+        //code for layout
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellsPerLine: CGFloat = 2
+        let interItemSpacing = layout.minimumInteritemSpacing * (cellsPerLine - 1)
+        let width = collectionView.frame.size.width / cellsPerLine - interItemSpacing / cellsPerLine
+        layout.itemSize = CGSize(width: width, height: width * 7 / 5)
+        
         getMovies()
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,16 +39,17 @@ class SuperHeroViewController: UIViewController, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "com.jessica.SuperheroCell", for: indexPath) as! SuperheroCell
-        let movie = superheroMovies[indexPath.row]
-        let posterPathString = movie["poster_path"] as! String
-        let baseURLString = "https://image.tmdb.org/t/p/w500"
-        let posterURL = URL(string: baseURLString + posterPathString)!
-        cell.superheroImage.af_setImage(withURL: posterURL)
+        let movie = superheroMovies[indexPath.item]
+        if let posterPathString = movie["poster_path"] as? String {
+            let baseURLString = "https://image.tmdb.org/t/p/w500"
+            let posterURL = URL(string: baseURLString + posterPathString)!
+            cell.superheroImage.af_setImage(withURL: posterURL)
+        }
         return cell
     }
     
     func getMovies() {
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/297762/similar?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US&page=1")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data, response, error) in
@@ -53,9 +61,19 @@ class SuperHeroViewController: UIViewController, UICollectionViewDataSource {
                 let movies = dataDictionary["results"] as! [[String: Any]]
                 self.superheroMovies = movies
                 self.collectionView.reloadData()
+                //self.refreshControl.refreshData
             }
         }
         task.resume()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UICollectionViewCell
+        if let indexPath = collectionView.indexPath(for: cell) {
+            let movie = superheroMovies[indexPath.row]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        }
     }
 }
 

@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Movies-->
+        <!--Now Playing-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="NowPlayingViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
@@ -70,7 +70,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Movies" id="7zY-yj-HX6"/>
+                    <navigationItem key="navigationItem" title="Now Playing" id="7zY-yj-HX6"/>
                     <connections>
                         <outlet property="activityIndicator" destination="81b-Cp-4k8" id="hIK-BS-fNI"/>
                         <outlet property="tableView" destination="mtC-ch-VBQ" id="PGp-Tn-DCI"/>
@@ -173,7 +173,7 @@
             </objects>
             <point key="canvasLocation" x="85.599999999999994" y="37.331334332833585"/>
         </scene>
-        <!--Super Hero View Controller-->
+        <!--Superhero-->
         <scene sceneID="CKa-zA-lTv">
             <objects>
                 <viewController id="itL-Um-H67" customClass="SuperHeroViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
@@ -187,37 +187,31 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="geD-sa-CSB">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GIm-VZ-UOZ">
-                                    <size key="itemSize" width="116" height="168"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="3" id="GIm-VZ-UOZ">
+                                    <size key="itemSize" width="187" height="268"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="okdude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HMH-26-QRX">
-                                    <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="com.jessica.SuperheroCell" id="wg4-Tu-6Oi" customClass="SuperheroCell" customModule="Flix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="116" height="168"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="com.jessica.SuperheroCell" id="wg4-Tu-6Oi" customClass="SuperheroCell" customModule="Flix" customModuleProvider="target">
+                                        <rect key="frame" x="94" y="0.0" width="187" height="268"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="116" height="168"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="187" height="268"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V49-eB-Flv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="116" height="168"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V49-eB-Flv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="268"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
                                         <connections>
                                             <outlet property="superheroImage" destination="V49-eB-Flv" id="6T4-aX-a1A"/>
+                                            <segue destination="Eti-Sn-nlo" kind="show" id="NEo-LY-NUT"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -225,7 +219,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mhh-Zk-soc"/>
+                    <navigationItem key="navigationItem" title="Superhero" id="mhh-Zk-soc"/>
                     <connections>
                         <outlet property="collectionView" destination="geD-sa-CSB" id="N3m-NB-6hN"/>
                     </connections>
@@ -258,4 +252,7 @@
         <image name="now_playing_tabbar_item" width="21" height="21"/>
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="NEo-LY-NUT"/>
+    </inferredMetricsTieBreakers>
 </document>
