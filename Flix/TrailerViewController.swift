@@ -13,33 +13,40 @@ class TrailerViewController: UIViewController {
     @IBOutlet weak var webView: UIWebView!
     var trailerURL: String = ""
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        activityIndicator.startAnimating()
+        
         let requestURL = URL(string: trailerURL)
         let request = URLRequest(url: requestURL!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data, response, error) in
-            print("angery")
             
             if let error = error {
                 print(error)
             } else if let data = data {
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                let movies = dataDictionary["results"] as! [[String: Any]]
+                let trailers = dataDictionary["results"] as! [[String: Any]]
                 
-                for dicts in movies {
+                for dicts in trailers {
                     if dicts["type"] as? String == "Trailer" {
                         let key = dicts["key"] as! String
                         let youtubeStringURL = "https://www.youtube.com/watch?v=" + key
                         let youtubeURL = URL(string: youtubeStringURL)
                         let request = URLRequest(url: youtubeURL!)
                         self.webView.loadRequest(request)
+                        
                     }
                 }
             }
         }
         task.resume()
+        activityIndicator.stopAnimating()
+        
     }
 
     override func didReceiveMemoryWarning() {
