@@ -49,7 +49,16 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let trailerVC = segue.destination as! TrailerViewController
+        if let movie = movie {
+            let movieID = movie["id"] as! Int
+            let stringID = String(movieID)
+            print(stringID)
+            trailerVC.trailerURL = "https://api.themoviedb.org/3/movie/" + stringID + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US"
+        }
+        
+    }
 
     /*
     // MARK: - Navigation

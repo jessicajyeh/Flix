@@ -15,6 +15,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     var movies: [[String: Any]] = []
     var refreshControl: UIRefreshControl!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    let alertController = UIAlertController(title: "Cannot Load Movies", message: "You appear to be offine.", preferredStyle: .alert)
 
     
     override func viewDidLoad() {
@@ -24,8 +25,14 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: .valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // handle response here.
+        }
+        alertController.addAction(OKAction)
+        
         tableView.dataSource = self
         getMovies()
+        
         activityIndicator.stopAnimating()
     }
 
@@ -68,7 +75,10 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         let task = session.dataTask(with: request) { (data, response, error) in
             // This will run when the network request returns
             if let error = error {
-                print(error.localizedDescription)
+                self.present(self.alertController, animated: true) {
+                    //self.getMovies()
+                    print(error)
+                }
             } else if let data = data {
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                 let movies = dataDictionary["results"] as! [[String: Any]]
